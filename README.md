@@ -11,7 +11,7 @@ con questa API puoi generare semplicemente la tua password scegliendo i parametr
 ### paramethers
 
 tutti i parametri inseriti
-?length=16&base=fabioiannottauppercase=true&digits=true&special_chars=true
+?length=16&base=fabioiannotta&uppercase=true&digits=true&special_chars=true
 
 ```json
 {
