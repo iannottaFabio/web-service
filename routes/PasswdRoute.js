@@ -24,12 +24,13 @@ router.post('/validate', (req, res) => {
     }
   
     const password = req.body.password;
-    const problems = validatePassword(password);
+    const problems = validatePassword(password).problems;
   
     res.json({
       password,
       validation: problems === null,
-      ...(problems && { problems })
+      ...(problems && { problems }),
+      strength: validatePassword(password).strength
     });
   });
 
@@ -47,12 +48,45 @@ function generatePassword(base = "passwdGen" + passCount++, length = 12, useUppe
 }
 
 function validatePassword(pass) {
+    let strength = 4
     const problems = [];
-    if (pass.length < 10) problems.push("Password troppo corta.");
-    if (!/\d/.test(pass)) problems.push("Manca un numero.");
-    if (!/[A-Z]/.test(pass)) problems.push("Manca una maiuscola.");
-    if (!/[!@#$%^&*()\[\]{}\-_+=|;:,.<>?]/.test(pass)) problems.push("Manca un carattere speciale.");
-    return problems.length ? problems : null;
+    if (pass.length < 10) {
+      problems.push("Password troppo corta.");
+      strength--
+    }
+    if (!/\d/.test(pass)) {
+      problems.push("Manca un numero.");
+      strength--
+    }
+    if (!/[A-Z]/.test(pass)) {
+      problems.push("Manca una maiuscola.");
+      strength--
+    }
+    if (!/[!@#$%^&*()\[\]{}\-_+=|;:,.<>?]/.test(pass)) {
+      problems.push("Manca un carattere speciale.");
+      strength--
+    }
+    switch(strength) {
+      case 0:
+        strength = "MOLTO debole"
+        break;
+      case 1:
+        strength = "debole"
+        break;
+      case 2:
+        strength = "neutra"
+        break;
+      case 3:
+        strength = "buona"
+        break;
+      case 4:
+        strength = "MOLTO buona"
+        break;
+    }
+    return {
+      problems: problems.length ? problems : null,
+      strength: strength
+    }
   }
 
 
