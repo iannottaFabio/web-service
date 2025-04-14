@@ -74,13 +74,13 @@ function validatePassword(pass) {
         strength = "debole"
         break;
       case 2:
-        strength = "neutra"
-        break;
-      case 3:
         strength = "buona"
         break;
-      case 4:
+      case 3:
         strength = "MOLTO buona"
+        break;
+      case 4:
+        strength = "ottimale"
         break;
     }
     return {
