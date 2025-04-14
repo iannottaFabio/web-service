@@ -8,3 +8,12 @@ Content-Type: application/json
 {
     "password": "passwdGen0nrdsoabybncq"
 }
+
+###
+
+POST http://localhost:8080/secure/breached
+Content-Type: application/json
+
+{
+    "password": "123456789"
+}
