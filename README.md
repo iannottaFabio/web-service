@@ -1,20 +1,54 @@
-# Documentazione
-# password gernerator
-con questa API puoi generare semplicemente la tua password scegliendo i parametri che ti interessano di più 
-## endpoint
-/generate-password
+# 🔐 Password Web Service
+
+Un semplice Web Service RESTful per la generazione, validazione e verifica di password tramite Node.js + Express.
+
+## 🚀 Funzionalità implementate
+
+Il servizio espone i seguenti **4 endpoint**:
+
+---
+
+### 1. `GET /generate`
+
+Genera una password sicura personalizzata.
+
+#### Parametri Query:
+| Parametro         | Tipo    | Default  | Descrizione                                      |
+|-------------------|---------|----------|--------------------------------------------------|
+| `length`          | Number  | `12`     | Lunghezza della password da generare            |
+| `base`            | String  | `passwdGenN` | Prefisso della password generata         |
+| `uppercase`       | Boolean | `true`   | Includere lettere maiuscole                     |
+| `digits`          | Boolean | `true`   | Includere numeri                                |
+| `special_chars`   | Boolean | `true`   | Includere caratteri speciali                    |
+
+#### Esempio richiesta:
+```http
+GET /password/generate?length=16&uppercase=true&digits=true&special_chars=false
+```
+#### Esempio di risposta
+
 ```json
 {
-    "password":"sdlqbnaoxour"
+  "password": "passwdGen0aHkdpflkwhDPoiw"
 }
-```
-### paramethers
 
-tutti i parametri inseriti
-?length=16&base=fabioiannotta&uppercase=true&digits=true&special_chars=true
+```
+
+### 1. `POST /generate`
+
+🧪 Valida la robustezza di una password secondo regole predefinite.
+### 📅 Corpo richiesta:
 
 ```json
 {
-  "password": "fabio.iannottad[l5x!8WtVJr-(7K"
+  "password": "Passw0rd!"
 }
 ```
+🔍 Requisiti controllati:
+Lunghezza minima: 10 caratteri
+
+Almeno un numero
+
+Almeno una lettera maiuscola
+
+Almeno un carattere speciale
