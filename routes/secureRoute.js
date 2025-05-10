@@ -9,15 +9,13 @@ SecureRouter.post('/breached', async (req, res) => {
   if (!password) {
     return res.status(400).json({ error: "Password richiesta." });
   }
-
   const sha1 = crypto.createHash('sha1').update(password).digest('hex').toUpperCase();
   const prefix = sha1.substring(0, 5);
   const suffix = sha1.substring(5);
 
   try {
     const response = await axios.get(`https://api.pwnedpasswords.com/range/${prefix}`);
-    const lines = response.data.split('\n');
-    const match = lines.find(line => line.startsWith(suffix));
+    const match = response.data.split('\n').find(line => line.startsWith(suffix));
     const count = match ? parseInt(match.split(':')[1]) : 0;
 
     res.json({
